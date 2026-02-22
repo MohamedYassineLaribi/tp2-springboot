@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{template}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Etudiants</title>
+</head>
+
+<body>
+    <div layout:fragment="MyContent">
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-header">Liste des Etudiants</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Classe</th>
+                                <th>Date Naissance</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="e : ${etudiants.content}">
+                                <td th:text="${e.idEtudiant}"></td>
+                                <td th:text="${e.nomEtudiant}"></td>
+                                <td th:text="${e.prenomEtudiant}"></td>
+                                <td th:text="${e.classe}"></td>
+                                <td th:text="${#dates.format(e.dateNaissance, 'dd/MM/yyyy')}"></td>
+                                <td th:text="${e.email}"></td>
+                                <td>
+                                    <a class="btn btn-danger"
+                                        th:href="@{supprimerEtudiant(id=${e.idEtudiant}, page=${currentPage}, size=${size})}"
+                                        onclick="return confirm('Etes-vous sûr ?')">Supprimer</a>
+                                    <a class="btn btn-warning"
+                                        th:href="@{modifierEtudiant(id=${e.idEtudiant})}">Modifier</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul class="nav nav-pills">
+                        <li th:each="page,status:${pages}">
+                            <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+                                th:href="@{ListeEtudiants(page=${status.index}, size=${size})}"
+                                th:text="${status.index}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

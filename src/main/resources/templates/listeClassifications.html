@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{template}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Classifications</title>
+</head>
+
+<body>
+    <div layout:fragment="MyContent">
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-header">Liste des Classifications</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Libellé</th>
+                                <th>Score</th>
+                                <th>Etudiant</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="c : ${classifications.content}">
+                                <td th:text="${c.idClassification}"></td>
+                                <td th:text="${c.libelle}"></td>
+                                <td th:text="${c.score}"></td>
+                                <td
+                                    th:text="${c.etudiant != null ? c.etudiant.nomEtudiant + ' ' + c.etudiant.prenomEtudiant : 'Non défini'}">
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger"
+                                        th:href="@{supprimerClassification(id=${c.idClassification}, page=${currentPage})}"
+                                        onclick="return confirm('Etes-vous sûr ?')">Supprimer</a>
+                                    <a class="btn btn-warning"
+                                        th:href="@{modifierClassification(id=${c.idClassification})}">Modifier</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul class="nav nav-pills">
+                        <li th:each="page,status:${pages}">
+                            <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+                                th:href="@{ListeClassifications(page=${status.index})}" th:text="${status.index}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

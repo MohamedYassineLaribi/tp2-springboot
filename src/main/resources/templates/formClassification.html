@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{template}">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${mode == 'edit' ? 'Modifier Classification' : 'Ajouter Classification'}"></title>
+</head>
+
+<body>
+    <div layout:fragment="MyContent">
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-header"
+                    th:text="${mode == 'edit' ? 'Modifier Classification' : 'Ajouter Classification'}"></div>
+                <div class="card-body">
+                    <form th:action="${mode == 'edit' ? 'updateClassification' : 'saveClassification'}" method="post"
+                        th:object="${classification}">
+                        <div class="form-group" th:if="${mode == 'edit'}">
+                            <label class="control-label">ID Classification :</label>
+                            <input type="text" th:field="*{idClassification}" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Libellé :</label>
+                            <input type="text" th:field="*{libelle}" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Score :</label>
+                            <input type="number" step="0.01" th:field="*{score}" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Etudiant :</label>
+                            <select th:field="*{etudiant}" class="form-control">
+                                <option th:each="e : ${etudiants}" th:value="${e.idEtudiant}"
+                                    th:text="${e.nomEtudiant + ' ' + e.prenomEtudiant}"></option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Valider</button>
+                        </div>
+                    </form>
+                    <a th:href="@{ListeClassifications}" class="btn btn-link mt-3">Liste des Classifications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

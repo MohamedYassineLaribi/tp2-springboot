@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{template}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier un Etudiant</title>
+</head>
+
+<body>
+    <div layout:fragment="MyContent">
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-header">Modifier un Etudiant</div>
+                <div class="card-body">
+                    <form th:action="@{updateEtudiant}" method="post">
+                        <div class="form-group">
+                            <label class="control-label">ID Etudiant :</label>
+                            <input type="text" name="idEtudiant" class="form-control" th:value="${etudiant.idEtudiant}"
+                                readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Nom Etudiant :</label>
+                            <input type="text" name="nomEtudiant" class="form-control"
+                                th:value="${etudiant.nomEtudiant}" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Prénom Etudiant :</label>
+                            <input type="text" name="prenomEtudiant" class="form-control"
+                                th:value="${etudiant.prenomEtudiant}" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Classe :</label>
+                            <input type="text" name="classe" class="form-control" th:value="${etudiant.classe}" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Date Naissance :</label>
+                            <input type="date" name="date" class="form-control"
+                                th:value="${#dates.format(etudiant.dateNaissance, 'yyyy-MM-dd')}" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Email :</label>
+                            <input type="text" name="email" class="form-control" th:value="${etudiant.email}" />
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Valider</button>
+                        </div>
+                    </form>
+                    <a th:href="@{ListeEtudiants}" class="btn btn-link mt-3">Liste des Etudiants</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
