@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{template}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{template}">
 
 <head>
     <meta charset="UTF-8">
@@ -22,7 +24,9 @@
                                 <th>Classe</th>
                                 <th>Date Naissance</th>
                                 <th>Email</th>
-                                <th>Actions</th>
+                                <!-- Colonnes actions visibles seulement pour ADMIN -->
+                                <th sec:authorize="hasAuthority('ADMIN')">Supprimer</th>
+                                <th sec:authorize="hasAuthority('ADMIN')">Modifier</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,15 +34,23 @@
                                 <td th:text="${e.idEtudiant}"></td>
                                 <td th:text="${e.nomEtudiant}"></td>
                                 <td th:text="${e.prenomEtudiant}"></td>
-                                <td th:text="${e.classe}"></td>
+                                <td th:text="${e.classe != null ? e.classe.nomClasse : 'N/A'}"></td>
                                 <td th:text="${#dates.format(e.dateNaissance, 'dd/MM/yyyy')}"></td>
                                 <td th:text="${e.email}"></td>
-                                <td>
-                                    <a class="btn btn-danger"
-                                        th:href="@{supprimerEtudiant(id=${e.idEtudiant}, page=${currentPage}, size=${size})}"
-                                        onclick="return confirm('Etes-vous sûr ?')">Supprimer</a>
-                                    <a class="btn btn-warning"
-                                        th:href="@{modifierEtudiant(id=${e.idEtudiant})}">Modifier</a>
+                                <!-- Bouton Supprimer : ADMIN uniquement -->
+                                <td sec:authorize="hasAuthority('ADMIN')">
+                                    <a class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Etes-vous sûr ?')"
+                                       th:href="@{supprimerEtudiant(id=${e.idEtudiant}, page=${currentPage}, size=${size})}">
+                                        Supprimer
+                                    </a>
+                                </td>
+                                <!-- Bouton Modifier : ADMIN uniquement -->
+                                <td sec:authorize="hasAuthority('ADMIN')">
+                                    <a class="btn btn-warning btn-sm"
+                                       th:href="@{modifierEtudiant(id=${e.idEtudiant}, page=${currentPage}, size=${size})}">
+                                        Modifier
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -46,8 +58,8 @@
                     <ul class="nav nav-pills">
                         <li th:each="page,status:${pages}">
                             <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
-                                th:href="@{ListeEtudiants(page=${status.index}, size=${size})}"
-                                th:text="${status.index}"></a>
+                               th:href="@{ListeEtudiants(page=${status.index}, size=${size})}"
+                               th:text="${status.index}"></a>
                         </li>
                     </ul>
                 </div>

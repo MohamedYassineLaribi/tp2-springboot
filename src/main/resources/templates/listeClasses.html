@@ -4,39 +4,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Liste des Classifications</title>
+    <title>Liste des Classes</title>
 </head>
 
 <body>
     <div layout:fragment="MyContent">
         <div class="container mt-5">
             <div class="card">
-                <div class="card-header">Liste des Classifications</div>
+                <div class="card-header">Liste des Classes</div>
                 <div class="card-body">
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Libellé</th>
-                                <th>Score</th>
-                                <th>Etudiant</th>
+                                <th>Nom Classe</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="c : ${classifications.content}">
-                                <td th:text="${c.idClassification}"></td>
-                                <td th:text="${c.libelle}"></td>
-                                <td th:text="${c.score}"></td>
-                                <td
-                                    th:text="${c.etudiant != null ? c.etudiant.nomEtudiant + ' ' + c.etudiant.prenomEtudiant : 'Non défini'}">
-                                </td>
+                            <tr th:each="c : ${classes.content}">
+                                <td th:text="${c.idClasse}"></td>
+                                <td th:text="${c.nomClasse}"></td>
                                 <td>
                                     <a class="btn btn-danger"
-                                        th:href="@{supprimerClassification(id=${c.idClassification}, page=${currentPage})}"
+                                        th:href="@{supprimerClasse(id=${c.idClasse}, page=${currentPage}, size=${size})}"
                                         onclick="return confirm('Etes-vous sûr ?')">Supprimer</a>
                                     <a class="btn btn-warning"
-                                        th:href="@{modifierClassification(id=${c.idClassification})}">Modifier</a>
+                                        th:href="@{modifierClasse(id=${c.idClasse})}">Modifier</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -44,7 +38,7 @@
                     <ul class="nav nav-pills">
                         <li th:each="page,status:${pages}">
                             <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
-                                th:href="@{ListeClassifications(page=${status.index})}" th:text="${status.index}"></a>
+                                th:href="@{ListeClasses(page=${status.index}, size=${size})}" th:text="${status.index}"></a>
                         </li>
                     </ul>
                 </div>

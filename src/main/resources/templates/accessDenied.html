@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template}">
+<head>
+    <meta charset="utf-8">
+    <title>Accès refusé</title>
+</head>
+<body>
+    <div layout:fragment="MyContent">
+        <div class="container mt-5">
+            <div class="alert alert-danger">
+                <h3><i>⛔</i> Vous n'êtes pas autorisé à accéder à cette page.</h3>
+                <p>Veuillez contacter l'administrateur si vous pensez que c'est une erreur.</p>
+                <a th:href="@{/ListeEtudiants}" class="btn btn-primary">Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

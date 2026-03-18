@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="utf-8">
@@ -24,30 +26,32 @@
                     Etudiants
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
+                    <!-- Visible seulement pour ADMIN et AGENT -->
+                    <a sec:authorize="hasAnyAuthority('ADMIN', 'AGENT')" class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
                     <a class="dropdown-item" th:href="@{ListeEtudiants}">Lister</a>
                 </div>
             </li>
-            <!-- Dropdown Classifications -->
+            <!-- Dropdown Classes -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarClassifs" data-toggle="dropdown">
-                    Classifications
+                <a class="nav-link dropdown-toggle" href="#" id="navbarClasses" data-toggle="dropdown">
+                    Classes
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{showCreateClassification}">Ajouter</a>
-                    <a class="dropdown-item" th:href="@{ListeClassifications}">Lister</a>
+                    <a class="dropdown-item" th:href="@{showCreateClasse}">Ajouter</a>
+                    <a class="dropdown-item" th:href="@{ListeClasses}">Lister</a>
                 </div>
             </li>
         </ul>
 
+        <!-- Menu utilisateur (droite) -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    [username]
+                    <span sec:authentication="name"></span>
                 </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">login</a>
-                    <a class="dropdown-item" href="#">logout</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a sec:authorize="!isAuthenticated()" class="dropdown-item" th:href="@{/login}">Login</a>
+                    <a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/logout}">Logout</a>
                     <a class="dropdown-item" href="#">Profile</a>
                 </div>
             </li>
