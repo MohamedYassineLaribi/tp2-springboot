@@ -9,7 +9,7 @@ public class EtudiantDTO {
     private Date dateNaissance;
     private String email;
     // Nom de la classe (au lieu d'envoyer tout l'objet Classe)
-    private String nomClasse;
+    private String classe;
 
     public EtudiantDTO() {
     }
@@ -20,7 +20,7 @@ public class EtudiantDTO {
         this.prenomEtudiant = prenomEtudiant;
         this.dateNaissance = dateNaissance;
         this.email = email;
-        this.nomClasse = nomClasse;
+        this.classe = nomClasse;
     }
 
     public Long getIdEtudiant() {
@@ -63,11 +63,15 @@ public class EtudiantDTO {
         this.email = email;
     }
 
-    public String getNomClasse() {
-        return nomClasse;
-    }
+	public String getClasse() {
+		return classe;
+	}
 
-    public void setNomClasse(String nomClasse) {
-        this.nomClasse = nomClasse;
-    }
+	public void setClasse(String classe) {
+		this.classe = classe;
+	}
+
+    
+
+    
 }

@@ -3,14 +3,15 @@ package com.isetn.laribi.laribi_project;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import com.isetn.laribi.laribi_project.entities.AppRole;
 import com.isetn.laribi.laribi_project.entities.AppUser;
+import com.isetn.laribi.laribi_project.entities.Classe;
 import com.isetn.laribi.laribi_project.entities.Etudiant;
 import com.isetn.laribi.laribi_project.service.EtudiantService;
 import com.isetn.laribi.laribi_project.service.UserService;
@@ -26,16 +27,15 @@ public class LaribiProjectApplication implements CommandLineRunner {
 	@Autowired
 	UserService userService;
 
-
+	@Autowired
+	private RepositoryRestConfiguration repositoryRestConfiguration;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LaribiProjectApplication.class, args);
 	}
 
-
-
 	@PostConstruct
-	void init_users() {
+	public void init_users() {
 		if (userService.findUserByUsername("admin") != null) return;
 
 		userService.addRole(new AppRole(null, "ADMIN"));
@@ -54,6 +54,7 @@ public class LaribiProjectApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		repositoryRestConfiguration.exposeIdsFor(Etudiant.class, Classe.class);
 		if (etudiantService.getAllEtudiants().isEmpty()) {
 			etudiantService.saveEtudiant(new Etudiant("Laribi",   "Ahmed",  null, new Date(), "ahmed.laribi@isetn.tn"));
 			etudiantService.saveEtudiant(new Etudiant("Ben Ali",  "Sonia",  null, new Date(), "sonia.benali@isetn.tn"));

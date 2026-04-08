@@ -1,7 +1,7 @@
 package com.isetn.laribi.laribi_project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +20,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RoleRepository roleRepository;
 
-    @Autowired
-    PasswordEncoder bCryptPasswordEncoder;
-
     @Override
     public AppUser saveUser(AppUser user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
         return userRepository.save(user);
     }
 
@@ -49,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppRole addRole(AppRole role) {
+        if (role == null) return null;
         return roleRepository.save(role);
     }
 

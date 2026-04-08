@@ -8,8 +8,10 @@ import com.isetn.laribi.laribi_project.entities.Classe;
 
 public interface EtudiantService {
 	EtudiantDTO saveEtudiant(Etudiant e);
+	Etudiant saveEtudiantEntity(Etudiant e);
 
 	EtudiantDTO updateEtudiant(EtudiantDTO dto);
+	Etudiant updateEtudiantEntity(Etudiant e);
 
 	void deleteEtudiant(Etudiant e);
 

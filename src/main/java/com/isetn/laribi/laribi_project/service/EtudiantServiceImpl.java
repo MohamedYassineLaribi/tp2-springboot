@@ -54,10 +54,23 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
 	@Override
+	public Etudiant saveEtudiantEntity(Etudiant e) {
+		if (e == null) return null;
+		return etudiantRepository.save(e);
+	}
+
+	@Override
 	public EtudiantDTO updateEtudiant(EtudiantDTO dto) {
 		if (dto == null) return null;
 		Etudiant e = convertDtoToEntity(dto);
+		if (e == null) return null;
 		return convertEntityToDto(etudiantRepository.save(e));
+	}
+
+	@Override
+	public Etudiant updateEtudiantEntity(Etudiant e) {
+		if (e == null) return null;
+		return etudiantRepository.save(e);
 	}
 
 	@Override

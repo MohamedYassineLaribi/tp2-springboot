@@ -7,6 +7,9 @@ import org.springframework.data.repository.query.Param;
 import com.isetn.laribi.laribi_project.entities.Etudiant;
 import com.isetn.laribi.laribi_project.entities.Classe;
 
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource(path = "rest")
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
     List<Etudiant> findByNomEtudiant(String nom);
